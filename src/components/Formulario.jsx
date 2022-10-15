@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, onSnapshot, addDoc, doc, deleteDoc} from 'firebase/firestore';
 
@@ -15,8 +15,8 @@ const Formulario = () => {
         try {
 
             await onSnapshot(collection(db, "frutas"), (querySnapshot) => {
-            setListaFrutas(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id}))
-            )},
+            setListaFrutas(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id})));
+            }),
 
         } catch (error){
             console.log(error);
@@ -24,7 +24,7 @@ const Formulario = () => {
         };
 
         obtenerDatos();
-    }.[];
+    },[]);
 
     const eliminar = async id => {
         console.log(id)
