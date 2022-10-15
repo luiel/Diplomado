@@ -16,7 +16,7 @@ const Formulario = () => {
 
             await onSnapshot(collection(db, "frutas"), (querySnapshot) => {
             setListaFrutas(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id})));
-            }),
+            })
 
         } catch (error){
             console.log(error);
