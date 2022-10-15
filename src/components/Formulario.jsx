@@ -7,6 +7,8 @@ const Formulario = () => {
     const [fruta, setFruta] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [listaFrutas, setListaFrutas] = useState([])
+    const [proveedor, setProveedor] = useState('');
+    const [cliente, setCliente] = useState('');
 
 
     useEffect(() => {
@@ -41,16 +43,21 @@ const Formulario = () => {
            
             const data = await addDoc(collection(db,'frutas'),{
                 nombreFruta: fruta,
-                nombreDescripcion: descripcion
+                nombreDescripcion: descripcion,
+                nombreProveedor: proveedor,
+                nombreCliente: cliente,
+
             })
 
             setListaFrutas([
                 ...listaFrutas,
-                {nombreFruta:fruta, nombreDescripcion:descripcion, id:data.id}
+                {nombreFruta:fruta, nombreDescripcion:descripcion, nombreProveedor:proveedor, nombreCliente:cliente, id:data.id}
             ])
 
             setFruta('')
             setDescripcion('')
+            setProveedor('')
+            setCliente('')
             e.target.reset()
         }catch(error){
             console.log(error)
@@ -68,7 +75,7 @@ const Formulario = () => {
                     {
                         listaFrutas.map(item =>(
                             <li className='list-group-item' key={item.id}>
-                                <span className='lead'>{item.nombreFruta}-{item.nombreDescripcion}</span>
+                                <span className='lead'>{item.nombreFruta}-{item.nombreDescripcion}-{item.nombreProveedor}-{item.nombreCliente}</span>
                                 <button className='btn btn-danger btn-sm float-end mx-2' onClick={()=>eliminar(item.id)}>Eliminar</button>
                             </li>
                         ))
@@ -93,7 +100,22 @@ const Formulario = () => {
                 type="text" 
                 placeholder='Ingrese Descripción'
                 onChange={(e) => setDescripcion(e.target.value)}
-                value = {descripcion}></input>
+                value = {descripcion}>
+                </input>
+                <input 
+                className='form-control mb-2'
+                type="text" 
+                placeholder='Ingrese Proveedor'
+                onChange={(e)=>setProveedor(e.target.value)}
+                value = {proveedor}
+                ></input>
+                <input 
+                className='form-control mb-2'
+                type="text" 
+                placeholder='Ingrese Cliente'
+                onChange={(e) => setCliente(e.target.value)}
+                value = {cliente}>
+                </input>
                 <button 
                 className='btn btn-primary btn-block'
                 type='submit'
